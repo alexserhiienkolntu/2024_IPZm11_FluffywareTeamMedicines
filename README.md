@@ -38,6 +38,10 @@
 - Автори (Інформація про розробників або команду, що працювала над додатком);
 - Посилання на ресурси (Посилання на зовнішні ресурси, такі як вебсайт/репозиторій додатка).
 
+## Прототип дизайну
+
+![Прототип дизайну](https://raw.githubusercontent.com/alexserhiienkolntu/2024_IPZm11_FluffywareTeamMedicines/refs/heads/main/images/DesignPrototype.PNG)
+
 ## Команда
 
 | ПІБ                               | GitHub нікнейм     | Шифр групи    |
