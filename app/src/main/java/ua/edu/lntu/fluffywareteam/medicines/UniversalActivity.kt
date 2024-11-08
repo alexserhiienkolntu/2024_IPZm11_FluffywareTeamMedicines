@@ -43,7 +43,7 @@ fun UniversalScreen() {
             // verticalArrangement = Arrangement.Center
         ) {
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp));
         }
     }
 }

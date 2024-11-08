@@ -96,7 +96,7 @@ fun AddButton() {
 
 @Composable
 fun BottomNavigationBar() {
-    val context = LocalContext.current
+    val context = LocalContext.current;
     Row(
         modifier = Modifier
             .fillMaxWidth()

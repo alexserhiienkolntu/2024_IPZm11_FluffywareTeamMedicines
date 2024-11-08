@@ -6,5 +6,5 @@ import androidx.activity.ComponentActivity
 
 inline fun <reified T : ComponentActivity> jumpToActivity(context: Context) {
     val intent = Intent(context, T::class.java)
-    context.startActivity(intent)
+    context.startActivity(intent);
 }
