@@ -1,6 +1,7 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp") version "1.9.0-1.0.13"
 }
 
 android {
@@ -50,7 +51,11 @@ android {
 }
 
 dependencies {
-    implementation("androidx.compose.material3:material3:1.3.1")
+    implementation(libs.material3)
+    implementation("androidx.room:room-ktx:2.6.1")
+    implementation("androidx.room:room-runtime:2.6.1")
+    add("ksp", "androidx.room:room-compiler:2.6.1")
+    implementation(libs.androidx.navigation.compose)
     implementation(libs.material3)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
