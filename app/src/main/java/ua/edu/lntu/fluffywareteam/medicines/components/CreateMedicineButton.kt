@@ -18,8 +18,7 @@ import androidx.navigation.NavHostController
 
 @Composable
 fun CreateMedicineButton(navController: NavHostController) {
-    // val context = LocalContext.current
-    // val errorMessage = "Не вдається додати новий лікарський засіб =("
+
     Button(
         onClick = {
             navController.navigate("create-medicine-screen")

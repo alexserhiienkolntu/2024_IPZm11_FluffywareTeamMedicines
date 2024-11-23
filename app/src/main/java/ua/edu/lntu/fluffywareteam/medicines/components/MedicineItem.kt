@@ -22,7 +22,7 @@ import ua.edu.lntu.fluffywareteam.medicines.entities.Medicine
 @Composable
 fun MedicineItem(
     medicine: Medicine,
-    onDelete: (Medicine) -> Unit // Функция для обработки удаления
+    onDelete: (Medicine) -> Unit
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -32,11 +32,11 @@ fun MedicineItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically // Центрирование по вертикали
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            // Левый блок с текстовой информацией
+            // Left block with text information
             Column(
-                modifier = Modifier.weight(1f) // Забирает всё оставшееся пространство
+                modifier = Modifier.weight(1f) // Takes up all the remaining space
             ) {
                 Text(text = "Назва: ${medicine.name}", fontSize = 18.sp)
                 medicine.imageUri?.let { uri ->
@@ -48,14 +48,14 @@ fun MedicineItem(
                 Text(text = "Додаткові замітки: ${medicine.additionalNotes}", fontSize = 14.sp)
             }
 
-            // Кнопка с корзиной
+            // Button with basket
             IconButton(
-                onClick = { onDelete(medicine) } // Обработка клика
+                onClick = { onDelete(medicine) } // Click handling
             ) {
                 Icon(
-                    imageVector = Icons.Default.Delete, // Иконка корзины
+                    imageVector = Icons.Default.Delete, // Trash icon
                     contentDescription = "Удалить лекарство",
-                    tint = Color.Red // Цвет иконки
+                    tint = Color.Red // Icon color
                 )
             }
         }

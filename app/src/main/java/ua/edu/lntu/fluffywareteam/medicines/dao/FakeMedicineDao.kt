@@ -25,10 +25,10 @@ class FakeMedicineDao : MedicineDao {
     }
 
     override suspend fun insertMedicine(medicine: Medicine) {
-        // Заглушка: ничего не делаем
+        // Placeholder: do nothing
     }
 
     override suspend fun deleteMedicine(medicine: Medicine) {
-        // Заглушка: ничего не делаем
+        // Placeholder: do nothing
     }
 }

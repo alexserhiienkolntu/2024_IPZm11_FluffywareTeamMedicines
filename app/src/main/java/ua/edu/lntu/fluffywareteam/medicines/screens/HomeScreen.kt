@@ -33,7 +33,7 @@ fun HomeScreen(navController: NavHostController, database: IMedicineDatabase) {
     val scope = rememberCoroutineScope()
     var medicines by remember { mutableStateOf(listOf<Medicine>()) }
 
-    // Загружаем данные из базы
+    // Loading data from the database
     LaunchedEffect(Unit) {
         scope.launch {
             medicines = medicineDao.getAllMedicines()
@@ -53,10 +53,10 @@ fun HomeScreen(navController: NavHostController, database: IMedicineDatabase) {
             modifier = Modifier.padding(top = 24.dp)
         )
         Spacer(modifier = Modifier.height(16.dp))
-        // Add Button
+
         CreateMedicineButton(navController)
 
-        // Выводим список лекарств
+        // We display a list of medicines
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -68,7 +68,7 @@ fun HomeScreen(navController: NavHostController, database: IMedicineDatabase) {
                     onDelete = { selectedMedicine ->
                         scope.launch {
                             medicineDao.deleteMedicine(selectedMedicine)
-                            medicines = medicineDao.getAllMedicines() // Обновляем список после удаления
+                            medicines = medicineDao.getAllMedicines() // Refreshing the list after deletion
                         }
                     }
                 )

@@ -56,7 +56,7 @@ fun CreateMedicineScreen(database: IMedicineDatabase, onMedicineAdded: () -> Uni
     val medicineDao = database.medicineDao()
     val scope = rememberCoroutineScope()
 
-    // Launcher для выбора изображения
+    // Launcher for choosing an image
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
@@ -71,7 +71,7 @@ fun CreateMedicineScreen(database: IMedicineDatabase, onMedicineAdded: () -> Uni
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Заголовок
+        // Title
         Text(
             text = "Додати ліки",
             fontSize = 24.sp,
@@ -154,7 +154,7 @@ fun CreateMedicineScreen(database: IMedicineDatabase, onMedicineAdded: () -> Uni
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Додаткові замітки (Text Area с прокруткой)
+        // Додаткові замітки (Text Area)
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -183,7 +183,7 @@ fun CreateMedicineScreen(database: IMedicineDatabase, onMedicineAdded: () -> Uni
         }
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Кнопка "Додати"
+        // The Button "Додати"
         Button(
             onClick = {
                 if (medicineName.isNotEmpty()) {
@@ -198,10 +198,10 @@ fun CreateMedicineScreen(database: IMedicineDatabase, onMedicineAdded: () -> Uni
                                 additionalNotes = additionalNotes
                             )
                         )
-                        onMedicineAdded() // Переход к HomeScreen
+                        onMedicineAdded() // Go to HomeScreen
                     }
                 } else {
-                    // Показываем сообщение об ошибке
+                    // Showing an error message
                     Toast.makeText(
                         context,
                         "Назва ліків обов'язкове!",
