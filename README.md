@@ -42,6 +42,19 @@
 
 ![Прототип дизайну](https://raw.githubusercontent.com/alexserhiienkolntu/2024_IPZm11_FluffywareTeamMedicines/refs/heads/main/images/DesignPrototype.PNG)
 
+## Tech Stack
+
+| Категорія                         | Технологія                          |
+| --------------------------------- | ----------------------------------- |
+| Мова                              | Kotlin                              |
+| --------------------------------- | ----------------------------------- |
+| UI                                | Jetpack Compose + Material Design 3 |
+| --------------------------------- | ----------------------------------- |
+| Навігація                         | Jetpack Compose Navigation          |
+| --------------------------------- | ----------------------------------- |
+| ORM                               | Room                                |
+
+
 ## Команда
 
 | ПІБ                               | GitHub нікнейм     | Шифр групи    |
