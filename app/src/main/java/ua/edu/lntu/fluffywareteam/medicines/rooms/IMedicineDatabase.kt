@@ -1,3 +1,4 @@
+// File: ./rooms/IMedicineDatabase.kt
 package ua.edu.lntu.fluffywareteam.medicines.rooms
 
 import ua.edu.lntu.fluffywareteam.medicines.dao.MedicineDao

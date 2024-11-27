@@ -1,3 +1,4 @@
+// File: ./components/MedicineItem.kt
 package ua.edu.lntu.fluffywareteam.medicines.components
 
 import androidx.compose.foundation.layout.Column
@@ -54,7 +55,7 @@ fun MedicineItem(
             ) {
                 Icon(
                     imageVector = Icons.Default.Delete, // Trash icon
-                    contentDescription = "Удалить лекарство",
+                    contentDescription = "Видалити ліки",
                     tint = Color.Red // Icon color
                 )
             }

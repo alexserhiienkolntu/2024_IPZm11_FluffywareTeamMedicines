@@ -1,9 +1,8 @@
+// File: ./dao/MedicineDao.kt
 package ua.edu.lntu.fluffywareteam.medicines.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Delete
-import androidx.room.Query
+import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 import ua.edu.lntu.fluffywareteam.medicines.entities.Medicine
 
@@ -16,5 +15,5 @@ interface MedicineDao {
     suspend fun deleteMedicine(medicine: Medicine)
 
     @Query("SELECT * FROM medicines")
-    suspend fun getAllMedicines(): List<Medicine>
+    fun getAllMedicines(): Flow<List<Medicine>>
 }

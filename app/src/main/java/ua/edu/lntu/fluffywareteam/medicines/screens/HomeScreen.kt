@@ -1,3 +1,4 @@
+// File: ./screens/HomeScreen.kt
 package ua.edu.lntu.fluffywareteam.medicines.screens
 
 import androidx.compose.foundation.layout.Column
@@ -9,36 +10,20 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import kotlinx.coroutines.launch
 import ua.edu.lntu.fluffywareteam.medicines.components.CreateMedicineButton
 import ua.edu.lntu.fluffywareteam.medicines.components.MedicineItem
-import ua.edu.lntu.fluffywareteam.medicines.entities.Medicine
-import ua.edu.lntu.fluffywareteam.medicines.rooms.IMedicineDatabase
+import ua.edu.lntu.fluffywareteam.medicines.viewmodels.MedicineViewModel
 
 @Composable
-fun HomeScreen(navController: NavHostController, database: IMedicineDatabase) {
+fun HomeScreen(navController: NavHostController, viewModel: MedicineViewModel) {
 
-    val medicineDao = database.medicineDao()
-    val scope = rememberCoroutineScope()
-    var medicines by remember { mutableStateOf(listOf<Medicine>()) }
-
-    // Loading data from the database
-    LaunchedEffect(Unit) {
-        scope.launch {
-            medicines = medicineDao.getAllMedicines()
-        }
-    }
+    val medicineList = viewModel.medicineList.collectAsState()
 
     Column(
         modifier = Modifier
@@ -62,14 +47,11 @@ fun HomeScreen(navController: NavHostController, database: IMedicineDatabase) {
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            items(medicines) { medicine ->
+            items(medicineList.value) { medicine ->
                 MedicineItem(
                     medicine = medicine,
                     onDelete = { selectedMedicine ->
-                        scope.launch {
-                            medicineDao.deleteMedicine(selectedMedicine)
-                            medicines = medicineDao.getAllMedicines() // Refreshing the list after deletion
-                        }
+                        viewModel.deleteMedicine(selectedMedicine) // Control via ViewModel
                     }
                 )
                 Spacer(modifier = Modifier.height(8.dp))

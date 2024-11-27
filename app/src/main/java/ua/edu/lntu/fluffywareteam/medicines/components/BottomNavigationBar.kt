@@ -1,3 +1,4 @@
+// File: ./components/BottomNavigationBar.kt
 package ua.edu.lntu.fluffywareteam.medicines.components
 
 import androidx.compose.foundation.background

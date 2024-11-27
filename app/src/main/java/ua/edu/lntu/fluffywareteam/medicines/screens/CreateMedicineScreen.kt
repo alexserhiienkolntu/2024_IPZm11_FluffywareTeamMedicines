@@ -1,3 +1,4 @@
+// File: ./screens/CreateMedicineScreen.kt
 package ua.edu.lntu.fluffywareteam.medicines.screens
 
 import android.net.Uri
@@ -40,10 +41,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import ua.edu.lntu.fluffywareteam.medicines.entities.Medicine
-import ua.edu.lntu.fluffywareteam.medicines.rooms.IMedicineDatabase
+import ua.edu.lntu.fluffywareteam.medicines.viewmodels.MedicineViewModel
 
 @Composable
-fun CreateMedicineScreen(database: IMedicineDatabase, onMedicineAdded: () -> Unit) {
+fun CreateMedicineScreen(viewModel: MedicineViewModel, onMedicineAdded: () -> Unit) {
     var medicineName by remember { mutableStateOf("") }
     var medicineImageUri by remember { mutableStateOf<Uri?>(null) }
     var medicineType by remember { mutableStateOf("") }
@@ -53,7 +54,6 @@ fun CreateMedicineScreen(database: IMedicineDatabase, onMedicineAdded: () -> Uni
     val medicineTypes = listOf("Таблетки", "Капсули", "Сироп", "Інше")
     var isDropdownExpanded by remember { mutableStateOf(false) }
 
-    val medicineDao = database.medicineDao()
     val scope = rememberCoroutineScope()
 
     // Launcher for choosing an image
@@ -188,7 +188,7 @@ fun CreateMedicineScreen(database: IMedicineDatabase, onMedicineAdded: () -> Uni
             onClick = {
                 if (medicineName.isNotEmpty()) {
                     scope.launch {
-                        medicineDao.insertMedicine(
+                        viewModel.addMedicine(
                             Medicine(
                                 name = medicineName,
                                 imageUri = medicineImageUri?.toString(),

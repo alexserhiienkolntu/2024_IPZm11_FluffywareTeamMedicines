@@ -1,3 +1,4 @@
+// File: ./screens/AboutScreen.kt
 package ua.edu.lntu.fluffywareteam.medicines.screens
 
 import androidx.compose.foundation.layout.Box

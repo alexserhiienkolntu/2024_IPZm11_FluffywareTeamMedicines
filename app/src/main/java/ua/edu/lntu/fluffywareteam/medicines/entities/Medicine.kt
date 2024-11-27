@@ -1,3 +1,4 @@
+// File: ./entities/Medicine.kt
 package ua.edu.lntu.fluffywareteam.medicines.entities
 
 import androidx.room.Entity
