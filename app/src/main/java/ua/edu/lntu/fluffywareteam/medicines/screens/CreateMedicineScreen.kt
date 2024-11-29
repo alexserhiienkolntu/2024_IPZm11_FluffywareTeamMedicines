@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,13 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -54,10 +47,9 @@ fun CreateMedicineScreen(viewModel: MedicineViewModel, navController: NavHostCon
     var whenToUse by remember { mutableStateOf("") }
     var whenNotToUse by remember { mutableStateOf("") }
     var additionalNotes by remember { mutableStateOf("") }
-    val medicineTypes = listOf("Таблетки", "Капсули", "Сироп", "Інше")
-    var isDropdownExpanded by remember { mutableStateOf(false) }
 
     medicineName = createMedicineFormStack.medicineName
+    medicineType = createMedicineFormStack.medicineType
     whenToUse = createMedicineFormStack.whenToUse
     whenNotToUse = createMedicineFormStack.whenNotToUse
     additionalNotes = createMedicineFormStack.additionalNotes
@@ -92,7 +84,10 @@ fun CreateMedicineScreen(viewModel: MedicineViewModel, navController: NavHostCon
         // Назва ліків
         OutlinedTextField(
             value = medicineName,
-            onValueChange = { medicineName = it; createMedicineFormStack.medicineName = it },
+            onValueChange = {
+                medicineName = it
+                createMedicineFormStack.set(medicineName = it)
+            },
             label = { Text("Назва ліків") },
             modifier = Modifier.fillMaxWidth()
         )
@@ -116,40 +111,24 @@ fun CreateMedicineScreen(viewModel: MedicineViewModel, navController: NavHostCon
         Spacer(modifier = Modifier.height(16.dp))
 
         // Тип ліків
-        Box(modifier = Modifier.fillMaxWidth()) {
-            OutlinedTextField(
-                value = medicineType,
-                onValueChange = { },
-                label = { Text("Тип ліків") },
-                modifier = Modifier.fillMaxWidth(),
-                readOnly = true,
-                trailingIcon = {
-                    IconButton(onClick = { isDropdownExpanded = true }) {
-                        Icon(imageVector = Icons.Default.Add, contentDescription = "Dropdown")
-                    }
-                }
-            )
-            DropdownMenu(
-                expanded = isDropdownExpanded,
-                onDismissRequest = { isDropdownExpanded = false }
-            ) {
-                medicineTypes.forEach { type ->
-                    DropdownMenuItem(
-                        text = { Text(type) },
-                        onClick = {
-                            medicineType = type
-                            isDropdownExpanded = false
-                        }
-                    )
-                }
-            }
-        }
+        OutlinedTextField(
+            value = medicineType,
+            onValueChange = {
+                medicineType = it
+                createMedicineFormStack.set(medicineType = it)
+            },
+            label = { Text("Тип ліків") },
+            modifier = Modifier.fillMaxWidth()
+        )
         Spacer(modifier = Modifier.height(16.dp))
 
         // У яких випадках приймати
         OutlinedTextField(
             value = whenToUse,
-            onValueChange = { whenToUse = it; createMedicineFormStack.whenToUse = it },
+            onValueChange = {
+                whenToUse = it
+                createMedicineFormStack.set(whenToUse = it)
+            },
             label = { Text("У яких випадках приймати") },
             modifier = Modifier.fillMaxWidth()
         )
@@ -158,7 +137,10 @@ fun CreateMedicineScreen(viewModel: MedicineViewModel, navController: NavHostCon
         // У яких випадках НЕ приймати
         OutlinedTextField(
             value = whenNotToUse,
-            onValueChange = { whenNotToUse = it; createMedicineFormStack.whenNotToUse = it },
+            onValueChange = {
+                whenNotToUse = it
+                createMedicineFormStack.set(whenNotToUse = it)
+            },
             label = { Text("У яких випадках НЕ приймати") },
             modifier = Modifier.fillMaxWidth(),
         )
@@ -175,7 +157,10 @@ fun CreateMedicineScreen(viewModel: MedicineViewModel, navController: NavHostCon
         ) {
             BasicTextField(
                 value = additionalNotes,
-                onValueChange = { additionalNotes = it; createMedicineFormStack.additionalNotes = it },
+                onValueChange = {
+                    additionalNotes = it
+                    createMedicineFormStack.set(additionalNotes = it)
+                },
                 textStyle = TextStyle(fontSize = 16.sp),
                 modifier = Modifier
                     .fillMaxSize()
