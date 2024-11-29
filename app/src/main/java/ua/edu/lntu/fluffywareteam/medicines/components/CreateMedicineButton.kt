@@ -16,13 +16,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import ua.edu.lntu.fluffywareteam.medicines.stack.homeStack
 
 @Composable
 fun CreateMedicineButton(navController: NavHostController) {
 
     Button(
         onClick = {
-            navController.navigate("create-medicine-screen")
+            homeStack.savedScreen = "create-medicine"
+            navController.navigate("create-medicine")
         },
         modifier = Modifier
             .padding(16.dp)

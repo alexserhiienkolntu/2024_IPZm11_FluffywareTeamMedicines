@@ -29,8 +29,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,12 +39,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import kotlinx.coroutines.launch
 import ua.edu.lntu.fluffywareteam.medicines.entities.Medicine
+import ua.edu.lntu.fluffywareteam.medicines.stack.createMedicineFormStack
+import ua.edu.lntu.fluffywareteam.medicines.stack.homeStack
 import ua.edu.lntu.fluffywareteam.medicines.viewmodels.MedicineViewModel
 
 @Composable
-fun CreateMedicineScreen(viewModel: MedicineViewModel, onMedicineAdded: () -> Unit) {
+fun CreateMedicineScreen(viewModel: MedicineViewModel, navController: NavHostController, onMedicineAdded: () -> Unit) {
     var medicineName by remember { mutableStateOf("") }
     var medicineImageUri by remember { mutableStateOf<Uri?>(null) }
     var medicineType by remember { mutableStateOf("") }
@@ -54,13 +57,20 @@ fun CreateMedicineScreen(viewModel: MedicineViewModel, onMedicineAdded: () -> Un
     val medicineTypes = listOf("Таблетки", "Капсули", "Сироп", "Інше")
     var isDropdownExpanded by remember { mutableStateOf(false) }
 
+    medicineName = createMedicineFormStack.medicineName
+    whenToUse = createMedicineFormStack.whenToUse
+    whenNotToUse = createMedicineFormStack.whenNotToUse
+    additionalNotes = createMedicineFormStack.additionalNotes
+
     val scope = rememberCoroutineScope()
 
     // Launcher for choosing an image
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
-        medicineImageUri = uri
+        if (uri != null) {
+            medicineImageUri = uri
+        }
     }
 
     val context = LocalContext.current
@@ -82,7 +92,7 @@ fun CreateMedicineScreen(viewModel: MedicineViewModel, onMedicineAdded: () -> Un
         // Назва ліків
         OutlinedTextField(
             value = medicineName,
-            onValueChange = { medicineName = it },
+            onValueChange = { medicineName = it; createMedicineFormStack.medicineName = it },
             label = { Text("Назва ліків") },
             modifier = Modifier.fillMaxWidth()
         )
@@ -139,7 +149,7 @@ fun CreateMedicineScreen(viewModel: MedicineViewModel, onMedicineAdded: () -> Un
         // У яких випадках приймати
         OutlinedTextField(
             value = whenToUse,
-            onValueChange = { whenToUse = it },
+            onValueChange = { whenToUse = it; createMedicineFormStack.whenToUse = it },
             label = { Text("У яких випадках приймати") },
             modifier = Modifier.fillMaxWidth()
         )
@@ -148,9 +158,9 @@ fun CreateMedicineScreen(viewModel: MedicineViewModel, onMedicineAdded: () -> Un
         // У яких випадках НЕ приймати
         OutlinedTextField(
             value = whenNotToUse,
-            onValueChange = { whenNotToUse = it },
+            onValueChange = { whenNotToUse = it; createMedicineFormStack.whenNotToUse = it },
             label = { Text("У яких випадках НЕ приймати") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -165,7 +175,7 @@ fun CreateMedicineScreen(viewModel: MedicineViewModel, onMedicineAdded: () -> Un
         ) {
             BasicTextField(
                 value = additionalNotes,
-                onValueChange = { additionalNotes = it },
+                onValueChange = { additionalNotes = it; createMedicineFormStack.additionalNotes = it },
                 textStyle = TextStyle(fontSize = 16.sp),
                 modifier = Modifier
                     .fillMaxSize()
@@ -198,6 +208,8 @@ fun CreateMedicineScreen(viewModel: MedicineViewModel, onMedicineAdded: () -> Un
                                 additionalNotes = additionalNotes
                             )
                         )
+                        homeStack.savedScreen = "home"
+                        createMedicineFormStack.clear()
                         onMedicineAdded() // Go to HomeScreen
                     }
                 } else {
@@ -212,6 +224,16 @@ fun CreateMedicineScreen(viewModel: MedicineViewModel, onMedicineAdded: () -> Un
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = "Додати ліки")
+        }
+
+        Button(
+            onClick = {
+                homeStack.savedScreen = "home"
+                navController.navigate("home")
+            },
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            Text(text = "Скасувати")
         }
     }
 }

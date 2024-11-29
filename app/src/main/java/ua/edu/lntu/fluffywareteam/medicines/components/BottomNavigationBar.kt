@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import ua.edu.lntu.fluffywareteam.medicines.stack.homeStack
 
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
@@ -28,7 +29,9 @@ fun BottomNavigationBar(navController: NavHostController) {
             .padding(8.dp),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        IconButton(onClick = { navController.navigate("home") }) {
+        IconButton(onClick = {
+            navController.navigate(homeStack.savedScreen)
+        }) {
             Icon(
                 imageVector = Icons.Default.Home,
                 contentDescription = "Home",

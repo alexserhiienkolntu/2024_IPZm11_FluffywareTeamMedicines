@@ -44,6 +44,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MedicinesApp(viewModel: MedicineViewModel) {
     val navController = rememberNavController()
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = { BottomNavigationBar(navController) }
@@ -53,14 +54,23 @@ fun MedicinesApp(viewModel: MedicineViewModel) {
             startDestination = "home",
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable("home") { HomeScreen(navController, viewModel) }
+            composable("home") {
+                HomeScreen(navController = navController, viewModel = viewModel)
+            }
             composable("timeline") { TimelineScreen() }
             composable("settings") { SettingsScreen() }
             composable("about") { AboutScreen() }
-            composable("create-medicine-screen") {
-                CreateMedicineScreen(viewModel, onMedicineAdded = {
-                    navController.navigate("home")
-                })
+            composable("create-medicine") {
+                CreateMedicineScreen(
+                    viewModel = viewModel,
+                    navController=navController,
+                    onMedicineAdded = {
+                        navController.navigate("home") {
+                            // Очистим стек до экрана "home"
+                            popUpTo("home") { inclusive = false }
+                        }
+                    }
+                )
             }
         }
     }
