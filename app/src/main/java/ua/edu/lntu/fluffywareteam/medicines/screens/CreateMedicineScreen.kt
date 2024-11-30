@@ -23,7 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,24 +35,24 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import kotlinx.coroutines.launch
 import ua.edu.lntu.fluffywareteam.medicines.entities.Medicine
-import ua.edu.lntu.fluffywareteam.medicines.stack.createMedicineFormStack
+import ua.edu.lntu.fluffywareteam.medicines.stack.medicineFormStack
 import ua.edu.lntu.fluffywareteam.medicines.stack.homeStack
 import ua.edu.lntu.fluffywareteam.medicines.viewmodels.MedicineViewModel
 
 @Composable
 fun CreateMedicineScreen(viewModel: MedicineViewModel, navController: NavHostController, onMedicineAdded: () -> Unit) {
-    var medicineName by remember { mutableStateOf("") }
-    var medicineImageUri by remember { mutableStateOf<Uri?>(null) }
-    var medicineType by remember { mutableStateOf("") }
-    var whenToUse by remember { mutableStateOf("") }
-    var whenNotToUse by remember { mutableStateOf("") }
-    var additionalNotes by remember { mutableStateOf("") }
+    var medicineName by rememberSaveable { mutableStateOf("") }
+    var medicineImageUri by rememberSaveable { mutableStateOf<Uri?>(null) }
+    var medicineType by rememberSaveable { mutableStateOf("") }
+    var whenToUse by rememberSaveable { mutableStateOf("") }
+    var whenNotToUse by rememberSaveable { mutableStateOf("") }
+    var additionalNotes by rememberSaveable { mutableStateOf("") }
 
-    medicineName = createMedicineFormStack.medicineName
-    medicineType = createMedicineFormStack.medicineType
-    whenToUse = createMedicineFormStack.whenToUse
-    whenNotToUse = createMedicineFormStack.whenNotToUse
-    additionalNotes = createMedicineFormStack.additionalNotes
+    medicineName = medicineFormStack.medicineName
+    medicineType = medicineFormStack.medicineType
+    whenToUse = medicineFormStack.whenToUse
+    whenNotToUse = medicineFormStack.whenNotToUse
+    additionalNotes = medicineFormStack.additionalNotes
 
     val scope = rememberCoroutineScope()
 
@@ -86,7 +86,7 @@ fun CreateMedicineScreen(viewModel: MedicineViewModel, navController: NavHostCon
             value = medicineName,
             onValueChange = {
                 medicineName = it
-                createMedicineFormStack.set(medicineName = it)
+                medicineFormStack.set(medicineName = it)
             },
             label = { Text("Назва ліків") },
             modifier = Modifier.fillMaxWidth()
@@ -115,7 +115,7 @@ fun CreateMedicineScreen(viewModel: MedicineViewModel, navController: NavHostCon
             value = medicineType,
             onValueChange = {
                 medicineType = it
-                createMedicineFormStack.set(medicineType = it)
+                medicineFormStack.set(medicineType = it)
             },
             label = { Text("Тип ліків") },
             modifier = Modifier.fillMaxWidth()
@@ -127,7 +127,7 @@ fun CreateMedicineScreen(viewModel: MedicineViewModel, navController: NavHostCon
             value = whenToUse,
             onValueChange = {
                 whenToUse = it
-                createMedicineFormStack.set(whenToUse = it)
+                medicineFormStack.set(whenToUse = it)
             },
             label = { Text("У яких випадках приймати") },
             modifier = Modifier.fillMaxWidth()
@@ -139,7 +139,7 @@ fun CreateMedicineScreen(viewModel: MedicineViewModel, navController: NavHostCon
             value = whenNotToUse,
             onValueChange = {
                 whenNotToUse = it
-                createMedicineFormStack.set(whenNotToUse = it)
+                medicineFormStack.set(whenNotToUse = it)
             },
             label = { Text("У яких випадках НЕ приймати") },
             modifier = Modifier.fillMaxWidth(),
@@ -159,7 +159,7 @@ fun CreateMedicineScreen(viewModel: MedicineViewModel, navController: NavHostCon
                 value = additionalNotes,
                 onValueChange = {
                     additionalNotes = it
-                    createMedicineFormStack.set(additionalNotes = it)
+                    medicineFormStack.set(additionalNotes = it)
                 },
                 textStyle = TextStyle(fontSize = 16.sp),
                 modifier = Modifier
@@ -193,8 +193,8 @@ fun CreateMedicineScreen(viewModel: MedicineViewModel, navController: NavHostCon
                                 additionalNotes = additionalNotes
                             )
                         )
-                        homeStack.savedScreen = "home"
-                        createMedicineFormStack.clear()
+                        homeStack.savedRoute = "home"
+                        medicineFormStack.clear()
                         onMedicineAdded() // Go to HomeScreen
                     }
                 } else {
@@ -213,7 +213,7 @@ fun CreateMedicineScreen(viewModel: MedicineViewModel, navController: NavHostCon
 
         Button(
             onClick = {
-                homeStack.savedScreen = "home"
+                homeStack.savedRoute = "home"
                 navController.navigate("home")
             },
             modifier = Modifier.fillMaxWidth(),

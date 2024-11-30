@@ -56,6 +56,7 @@ dependencies {
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+    implementation(libs.androidx.espresso.core)
     add("ksp", "androidx.room:room-compiler:2.6.1")
     implementation(libs.androidx.navigation.compose)
     implementation(libs.material3)

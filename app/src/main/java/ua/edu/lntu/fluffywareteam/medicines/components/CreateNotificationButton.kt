@@ -16,15 +16,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import ua.edu.lntu.fluffywareteam.medicines.stack.homeStack
+import ua.edu.lntu.fluffywareteam.medicines.stack.notificationStack
 
 @Composable
-fun CreateMedicineButton(navController: NavHostController) {
+fun CreateNotificationButton(navController: NavHostController) {
 
     Button(
         onClick = {
-            homeStack.savedRoute = "create-medicine"
-            navController.navigate("create-medicine")
+            notificationStack.savedRoute = "create-notification"
+            navController.navigate("create-notification")
         },
         modifier = Modifier
             .padding(16.dp)

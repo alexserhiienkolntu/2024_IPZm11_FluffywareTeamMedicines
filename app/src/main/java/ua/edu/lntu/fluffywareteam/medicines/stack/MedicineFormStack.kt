@@ -1,12 +1,13 @@
 package ua.edu.lntu.fluffywareteam.medicines.stack
 
-class CreateMedicineFormStack(
-    var medicineName: String = "",
-    var medicineType: String = "",
-    var whenToUse: String = "",
-    var whenNotToUse: String = "",
-    var additionalNotes: String = "",
-) {
+class MedicineFormStack {
+
+    var medicineName: String = ""
+    var medicineType: String = ""
+    var whenToUse: String = ""
+    var whenNotToUse: String = ""
+    var additionalNotes: String = ""
+
     fun set(
         medicineName: String? = null,
         medicineType: String? = null,

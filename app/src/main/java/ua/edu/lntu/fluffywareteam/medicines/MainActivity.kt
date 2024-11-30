@@ -18,8 +18,9 @@ import ua.edu.lntu.fluffywareteam.medicines.providers.MedicineRepositoryProvider
 import ua.edu.lntu.fluffywareteam.medicines.screens.AboutScreen
 import ua.edu.lntu.fluffywareteam.medicines.screens.HomeScreen
 import ua.edu.lntu.fluffywareteam.medicines.screens.SettingsScreen
-import ua.edu.lntu.fluffywareteam.medicines.screens.TimelineScreen
+import ua.edu.lntu.fluffywareteam.medicines.screens.NotificationScreen
 import ua.edu.lntu.fluffywareteam.medicines.screens.CreateMedicineScreen
+import ua.edu.lntu.fluffywareteam.medicines.screens.CreateNotificationScreen
 import ua.edu.lntu.fluffywareteam.medicines.ui.theme.FluffywareTeamMedicinesTheme
 import ua.edu.lntu.fluffywareteam.medicines.viewmodels.MedicineViewModel
 
@@ -57,7 +58,9 @@ fun MedicinesApp(viewModel: MedicineViewModel) {
             composable("home") {
                 HomeScreen(navController = navController, viewModel = viewModel)
             }
-            composable("timeline") { TimelineScreen() }
+            composable("notifications") {
+                NotificationScreen(navController = navController, viewModel = viewModel)
+            }
             composable("settings") { SettingsScreen() }
             composable("about") { AboutScreen() }
             composable("create-medicine") {
@@ -66,9 +69,18 @@ fun MedicinesApp(viewModel: MedicineViewModel) {
                     navController=navController,
                     onMedicineAdded = {
                         navController.navigate("home") {
-                            // Очистим стек до экрана "home"
                             popUpTo("home") { inclusive = false }
                         }
+                    }
+                )
+            }
+            composable("create-notification") {
+                CreateNotificationScreen(
+                    navController = navController,
+                    medicineList = listOf("Аспирин", "Парацетамол", "Ибупрофен"),
+                    onSave = { selectedMedicine, time, selectedDays ->
+                        // Реализуйте сохранение данных (например, запись в базу данных)
+                        println("Лекарство: $selectedMedicine, Время: $time, Дни: $selectedDays")
                     }
                 )
             }

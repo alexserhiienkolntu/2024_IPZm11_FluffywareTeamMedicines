@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import ua.edu.lntu.fluffywareteam.medicines.stack.homeStack
+import ua.edu.lntu.fluffywareteam.medicines.stack.notificationStack
 
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
@@ -30,7 +31,7 @@ fun BottomNavigationBar(navController: NavHostController) {
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         IconButton(onClick = {
-            navController.navigate(homeStack.savedScreen)
+            navController.navigate(homeStack.savedRoute)
         }) {
             Icon(
                 imageVector = Icons.Default.Home,
@@ -38,10 +39,10 @@ fun BottomNavigationBar(navController: NavHostController) {
                 tint = Color(0xFFB39DDB)
             )
         }
-        IconButton(onClick = { navController.navigate("timeline") }) {
+        IconButton(onClick = { navController.navigate(notificationStack.savedRoute) }) {
             Icon(
                 imageVector = Icons.Default.DateRange,
-                contentDescription = "Timeline",
+                contentDescription = "Notifications",
                 tint = Color(0xFFB39DDB)
             )
         }
