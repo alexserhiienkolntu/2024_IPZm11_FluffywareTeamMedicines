@@ -9,8 +9,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import ua.edu.lntu.fluffywareteam.medicines.stack.notificationStack
 import android.app.TimePickerDialog
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateMapOf
@@ -22,7 +20,6 @@ import java.util.Calendar
 @SuppressLint("DefaultLocale")
 @Composable
 fun CreateNotificationScreen(
-    navController: NavController,
     medicineList: List<String>,
     onSave: (String, String, List<String>) -> Unit
 ) {
@@ -96,8 +93,8 @@ fun CreateNotificationScreen(
         // Cancel
         Button(
             onClick = {
-                notificationStack.savedRoute = "notifications"
-                navController.navigate("notifications")
+                val selectedDaysList = selectedDays.filterValues { it }.keys.toList()
+                onSave(selectedMedicine, selectedTime, selectedDaysList)
             },
             modifier = Modifier.fillMaxWidth(),
         ) {

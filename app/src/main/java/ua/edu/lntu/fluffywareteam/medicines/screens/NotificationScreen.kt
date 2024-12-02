@@ -17,12 +17,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import ua.edu.lntu.fluffywareteam.medicines.components.CreateNotificationButton
-import ua.edu.lntu.fluffywareteam.medicines.components.MedicineItem
-import ua.edu.lntu.fluffywareteam.medicines.viewmodels.MedicineViewModel
+import ua.edu.lntu.fluffywareteam.medicines.components.NotificationItem
+import ua.edu.lntu.fluffywareteam.medicines.viewmodels.NotificationViewModel
 
 @Composable
-fun NotificationScreen(navController: NavHostController, viewModel: MedicineViewModel) {
-    val medicineList = viewModel.medicineList.collectAsState()
+fun NotificationScreen(navController: NavHostController, viewModel: NotificationViewModel) {
+    val notificationList = viewModel.notifications.collectAsState()
 
     Column(
         modifier = Modifier
@@ -46,11 +46,11 @@ fun NotificationScreen(navController: NavHostController, viewModel: MedicineView
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            items(medicineList.value) { medicine ->
-                MedicineItem(
-                    medicine = medicine,
-                    onDelete = { selectedMedicine ->
-                        viewModel.deleteMedicine(selectedMedicine) // Control via ViewModel
+            items(notificationList.value) { notification ->
+                NotificationItem(
+                    notification = notification,
+                    onDelete = { selectedNotification ->
+                        viewModel.deleteNotification(selectedNotification) // Control via ViewModel
                     }
                 )
                 Spacer(modifier = Modifier.height(8.dp))
