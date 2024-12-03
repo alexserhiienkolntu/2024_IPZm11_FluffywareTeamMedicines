@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ua.edu.lntu.fluffywareteam.medicines.entities.NotificationCard
+
 @Composable
 fun NotificationItem(
     notification: NotificationCard,
@@ -37,9 +38,19 @@ fun NotificationItem(
             Column(
                 modifier = Modifier.weight(1f) // Takes up all the remaining space
             ) {
-                Text(text = "Назва ліків: ${notification.medicineName}", fontSize = 18.sp)
-                Text(text = "Година: ${notification.time}", fontSize = 14.sp)
-                Text(text = "Дні: ${notification.days}", fontSize = 14.sp)
+                if (notification.medicineName.isNotEmpty()) {
+                    Text(text = "Назва ліків: ${notification.medicineName}", fontSize = 18.sp)
+                }
+
+                if (notification.time.isNotEmpty()) {
+                    Text(text = "Час: ${notification.time}", fontSize = 14.sp)
+                }
+
+                if (notification.days.isNotEmpty()) {
+                    Text(text = "Приймати в дні: ${notification.days}", fontSize = 14.sp)
+                } else {
+                    Text(text = "Приймати щодня", fontSize = 14.sp)
+                }
             }
 
             // Button with basket

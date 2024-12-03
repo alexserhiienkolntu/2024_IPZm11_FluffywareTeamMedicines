@@ -19,11 +19,17 @@ import androidx.navigation.NavHostController
 import ua.edu.lntu.fluffywareteam.medicines.components.CreateMedicineButton
 import ua.edu.lntu.fluffywareteam.medicines.components.MedicineItem
 import ua.edu.lntu.fluffywareteam.medicines.viewmodels.MedicineViewModel
+import ua.edu.lntu.fluffywareteam.medicines.viewmodels.NotificationViewModel
 
 @Composable
-fun HomeScreen(navController: NavHostController, viewModel: MedicineViewModel) {
+fun HomeScreen(
+    navController: NavHostController,
+    medicineViewModel: MedicineViewModel,
+    notificationViewModel: NotificationViewModel
+) {
 
-    val medicineList = viewModel.medicineList.collectAsState()
+    val medicineList = medicineViewModel.medicineList.collectAsState().value
+    val notificationList = notificationViewModel.notifications.collectAsState().value
 
     Column(
         modifier = Modifier
@@ -47,11 +53,17 @@ fun HomeScreen(navController: NavHostController, viewModel: MedicineViewModel) {
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            items(medicineList.value) { medicine ->
+            items(medicineList) { medicine ->
                 MedicineItem(
                     medicine = medicine,
                     onDelete = { selectedMedicine ->
-                        viewModel.deleteMedicine(selectedMedicine) // Control via ViewModel
+                        // Cascade delete
+                        notificationList.forEach {notificationCard ->
+                            if (notificationCard.medicineName == selectedMedicine.name) {
+                                notificationViewModel.deleteNotification(notificationCard)
+                            }
+                        }
+                        medicineViewModel.deleteMedicine(selectedMedicine) // Control via ViewModel
                     }
                 )
                 Spacer(modifier = Modifier.height(8.dp))

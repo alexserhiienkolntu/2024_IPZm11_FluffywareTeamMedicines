@@ -39,14 +39,32 @@ fun MedicineItem(
             Column(
                 modifier = Modifier.weight(1f) // Takes up all the remaining space
             ) {
-                Text(text = "Назва: ${medicine.name}", fontSize = 18.sp)
-                medicine.imageUri?.let { uri ->
-                    Text(text = "Зображення: $uri", fontSize = 14.sp, color = Color.Gray)
+                if (medicine.name.isNotEmpty()) {
+                    Text(text = "Назва: ${medicine.name}", fontSize = 18.sp)
                 }
-                Text(text = "Тип: ${medicine.type}", fontSize = 14.sp)
-                Text(text = "Приймати: ${medicine.whenToUse}", fontSize = 14.sp)
-                Text(text = "Не приймати: ${medicine.whenNotToUse}", fontSize = 14.sp)
-                Text(text = "Додаткові замітки: ${medicine.additionalNotes}", fontSize = 14.sp)
+
+
+                medicine.imageUri?.let { uri ->
+                    if (uri.isNotEmpty()) {
+                        Text(text = "Зображення: $uri", fontSize = 14.sp, color = Color.Gray)
+                    }
+                }
+
+                if (medicine.type.isNotEmpty()) {
+                    Text(text = "Тип: ${medicine.type}", fontSize = 14.sp)
+                }
+
+                if (medicine.whenToUse.isNotEmpty()) {
+                    Text(text = "Приймати: ${medicine.whenToUse}", fontSize = 14.sp)
+                }
+
+                if (medicine.whenNotToUse.isNotEmpty()) {
+                    Text(text = "Не приймати: ${medicine.whenNotToUse}", fontSize = 14.sp)
+                }
+
+                if (medicine.additionalNotes.isNotEmpty()) {
+                    Text(text = "Додаткові замітки: ${medicine.additionalNotes}", fontSize = 14.sp)
+                }
             }
 
             // Button with basket

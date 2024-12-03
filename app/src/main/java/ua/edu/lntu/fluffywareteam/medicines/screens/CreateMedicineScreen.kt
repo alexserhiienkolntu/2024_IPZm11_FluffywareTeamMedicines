@@ -2,7 +2,6 @@
 package ua.edu.lntu.fluffywareteam.medicines.screens
 
 import android.net.Uri
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -37,6 +36,7 @@ import kotlinx.coroutines.launch
 import ua.edu.lntu.fluffywareteam.medicines.entities.Medicine
 import ua.edu.lntu.fluffywareteam.medicines.stack.medicineFormStack
 import ua.edu.lntu.fluffywareteam.medicines.stack.homeStack
+import ua.edu.lntu.fluffywareteam.medicines.utils.Alert
 import ua.edu.lntu.fluffywareteam.medicines.viewmodels.MedicineViewModel
 
 @Composable
@@ -199,11 +199,7 @@ fun CreateMedicineScreen(viewModel: MedicineViewModel, navController: NavHostCon
                     }
                 } else {
                     // Showing an error message
-                    Toast.makeText(
-                        context,
-                        "Назва ліків обов'язкове!",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Alert.show(context, text="Назва ліків обов'язкове!")
                 }
             },
             modifier = Modifier.fillMaxWidth()

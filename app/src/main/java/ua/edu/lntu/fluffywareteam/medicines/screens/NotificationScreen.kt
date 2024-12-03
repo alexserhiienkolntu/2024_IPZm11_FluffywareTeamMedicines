@@ -13,16 +13,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import ua.edu.lntu.fluffywareteam.medicines.channels.NotificationChannelService
 import ua.edu.lntu.fluffywareteam.medicines.components.CreateNotificationButton
 import ua.edu.lntu.fluffywareteam.medicines.components.NotificationItem
 import ua.edu.lntu.fluffywareteam.medicines.viewmodels.NotificationViewModel
 
 @Composable
-fun NotificationScreen(navController: NavHostController, viewModel: NotificationViewModel) {
-    val notificationList = viewModel.notifications.collectAsState()
+fun NotificationScreen(
+    navController: NavHostController,
+    notificationViewModel: NotificationViewModel
+) {
+    val notificationList = notificationViewModel.notifications.collectAsState().value
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -40,17 +46,18 @@ fun NotificationScreen(navController: NavHostController, viewModel: Notification
 
         CreateNotificationButton(navController)
 
-        // We display a list of medicines
+        // Display a list of medicines
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            items(notificationList.value) { notification ->
+            items(notificationList) { notification ->
                 NotificationItem(
                     notification = notification,
                     onDelete = { selectedNotification ->
-                        viewModel.deleteNotification(selectedNotification) // Control via ViewModel
+                        NotificationChannelService.cancelNotification(context, selectedNotification.id)
+                        notificationViewModel.deleteNotification(selectedNotification) // Control via ViewModel
                     }
                 )
                 Spacer(modifier = Modifier.height(8.dp))

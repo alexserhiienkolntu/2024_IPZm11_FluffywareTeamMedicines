@@ -15,12 +15,14 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import ua.edu.lntu.fluffywareteam.medicines.entities.Medicine
+import ua.edu.lntu.fluffywareteam.medicines.utils.Alert
 import java.util.Calendar
 
 @SuppressLint("DefaultLocale")
 @Composable
 fun CreateNotificationScreen(
-    medicineList: List<String>,
+    medicineList: List<Medicine>,
     onSave: (String, String, List<String>) -> Unit
 ) {
     var selectedMedicine by rememberSaveable { mutableStateOf("") }
@@ -82,12 +84,17 @@ fun CreateNotificationScreen(
         // Save button
         Button(
             onClick = {
-                val selectedDaysList = selectedDays.filterValues { it }.keys.toList()
-                onSave(selectedMedicine, selectedTime, selectedDaysList)
+                if (selectedMedicine.isNotEmpty() and selectedTime.isNotEmpty()) {
+                    val selectedDaysList = selectedDays.filterValues { it }.keys.toList()
+                    onSave(selectedMedicine, selectedTime, selectedDaysList)
+                } else {
+                    // Showing an error message
+                    Alert.show(context, text="Всі поля обов'язкові!")
+                }
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = "Сохранить")
+            Text(text = "Зберегти")
         }
 
         // Cancel
@@ -106,7 +113,7 @@ fun CreateNotificationScreen(
 @Composable
 fun DropdownMenu(
     selectedMedicine: String,
-    medicineList: List<String>,
+    medicineList: List<Medicine>,
     onMedicineSelected: (String) -> Unit
 ) {
     var expanded by rememberSaveable { mutableStateOf(false) }
@@ -131,10 +138,10 @@ fun DropdownMenu(
             medicineList.forEach { medicine ->
                 DropdownMenuItem(
                     onClick = {
-                        onMedicineSelected(medicine)
+                        onMedicineSelected(medicine.name)
                         expanded = false
                     },
-                    text = { Text(text = medicine) }
+                    text = { Text(text = medicine.name) }
                 )
             }
         }
