@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
                     Manifest.permission.POST_NOTIFICATIONS
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
-                // Запрос разрешения
+                // Запрос дозвілу
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         }
@@ -79,9 +79,7 @@ class MainActivity : ComponentActivity() {
         val notificationViewModel = NotificationViewModel(notificationRepository)
 
         setContent {
-            FluffywareTeamMedicinesTheme {
-                MedicinesApp(medicineViewModel=medicineViewModel, notificationViewModel=notificationViewModel)
-            }
+            MedicinesApp(medicineViewModel=medicineViewModel, notificationViewModel=notificationViewModel)
         }
     }
 }
@@ -114,7 +112,7 @@ fun MedicinesApp(medicineViewModel: MedicineViewModel, notificationViewModel: No
                     notificationViewModel = notificationViewModel
                 )
             }
-            composable("settings") { SettingsScreen() }
+            composable("settings") { SettingsScreen(navController) }
             composable("about") { AboutScreen() }
             composable("create-medicine") {
                 CreateMedicineScreen(

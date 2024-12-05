@@ -2,12 +2,12 @@ package ua.edu.lntu.fluffywareteam.medicines.stack
 
 class LoginFormStack {
 
-    var login: String = ""
+    var username: String = ""
     var password: String = ""
 
-    fun set(login: String? = null, password: String? = null) {
-        if (login != null) {
-            this.login = login
+    fun set(username: String? = null, password: String? = null) {
+        if (username != null) {
+            this.username = username
         }
         if (password != null) {
             this.password = password
@@ -15,7 +15,7 @@ class LoginFormStack {
     }
 
     fun clear() {
-        login = ""
+        username = ""
         password = ""
     }
 }

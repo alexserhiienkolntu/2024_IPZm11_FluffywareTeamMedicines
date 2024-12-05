@@ -2,8 +2,6 @@
 package ua.edu.lntu.fluffywareteam.medicines.screens
 
 import android.net.Uri
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -42,7 +40,7 @@ import ua.edu.lntu.fluffywareteam.medicines.viewmodels.MedicineViewModel
 @Composable
 fun CreateMedicineScreen(viewModel: MedicineViewModel, navController: NavHostController, onMedicineAdded: () -> Unit) {
     var medicineName by rememberSaveable { mutableStateOf("") }
-    var medicineImageUri by rememberSaveable { mutableStateOf<Uri?>(null) }
+    val medicineImageUri by rememberSaveable { mutableStateOf<Uri?>(null) }
     var medicineType by rememberSaveable { mutableStateOf("") }
     var whenToUse by rememberSaveable { mutableStateOf("") }
     var whenNotToUse by rememberSaveable { mutableStateOf("") }
@@ -55,16 +53,6 @@ fun CreateMedicineScreen(viewModel: MedicineViewModel, navController: NavHostCon
     additionalNotes = medicineFormStack.additionalNotes
 
     val scope = rememberCoroutineScope()
-
-    // Launcher for choosing an image
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        if (uri != null) {
-            medicineImageUri = uri
-        }
-    }
-
     val context = LocalContext.current
 
     Column(
@@ -91,23 +79,6 @@ fun CreateMedicineScreen(viewModel: MedicineViewModel, navController: NavHostCon
             label = { Text("Назва ліків") },
             modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Зображення ліків
-        Button(
-            onClick = { launcher.launch("image/*") },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Оберіть зображення")
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        medicineImageUri?.let { uri ->
-            Text(
-                text = "Обране зображення: ${uri.lastPathSegment}",
-                fontSize = 14.sp,
-                color = Color.Gray
-            )
-        }
         Spacer(modifier = Modifier.height(16.dp))
 
         // Тип ліків

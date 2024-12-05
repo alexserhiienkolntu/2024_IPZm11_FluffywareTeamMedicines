@@ -43,13 +43,6 @@ fun MedicineItem(
                     Text(text = "Назва: ${medicine.name}", fontSize = 18.sp)
                 }
 
-
-                medicine.imageUri?.let { uri ->
-                    if (uri.isNotEmpty()) {
-                        Text(text = "Зображення: $uri", fontSize = 14.sp, color = Color.Gray)
-                    }
-                }
-
                 if (medicine.type.isNotEmpty()) {
                     Text(text = "Тип: ${medicine.type}", fontSize = 14.sp)
                 }

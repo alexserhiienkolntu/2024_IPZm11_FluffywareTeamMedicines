@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import ua.edu.lntu.fluffywareteam.medicines.channels.NotificationChannelService
 import ua.edu.lntu.fluffywareteam.medicines.components.CreateNotificationButton
 import ua.edu.lntu.fluffywareteam.medicines.components.NotificationItem
@@ -24,7 +24,7 @@ import ua.edu.lntu.fluffywareteam.medicines.viewmodels.NotificationViewModel
 
 @Composable
 fun NotificationScreen(
-    navController: NavHostController,
+    navController: NavController,
     notificationViewModel: NotificationViewModel
 ) {
     val notificationList = notificationViewModel.notifications.collectAsState().value
@@ -55,6 +55,7 @@ fun NotificationScreen(
             items(notificationList) { notification ->
                 NotificationItem(
                     notification = notification,
+                    navController = navController,
                     onDelete = { selectedNotification ->
                         NotificationChannelService.cancelNotification(context, selectedNotification.id)
                         notificationViewModel.deleteNotification(selectedNotification) // Control via ViewModel
