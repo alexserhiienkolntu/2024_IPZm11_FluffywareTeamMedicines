@@ -1,4 +1,4 @@
-// File: ./screens/TimelineScreen.kt
+// File: ./screens/NotificationScreen.kt
 package ua.edu.lntu.fluffywareteam.medicines.screens
 
 import androidx.compose.foundation.layout.Column

@@ -12,5 +12,13 @@ class UrlProvider {
         fun getLoginUrl(): String {
             return BASE_URL + "auth/login/"
         }
+
+        fun getMedicinesUrl(): String {
+            return BASE_URL + "medicines/"
+        }
+
+        fun getNotificationCardsUrl(): String {
+            return BASE_URL + "notification-cards/"
+        }
     }
 }
